@@ -6,7 +6,7 @@ The application allows users to manage artists, albums and songs, with JWT authe
 
 ## Backend Repository
 
-[Musicfy Backend](https://github.com/gregoriomesafernandez-star/playMusic-backend)
+[playmusic Backend](https://github.com/gregoriomesafernandez-star/playMusic-backend)
 
 ## Features
 
