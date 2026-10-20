@@ -36,6 +36,7 @@
         </label>
         <img
             [src]="image() ? 'http://localhost:3000/api/get-image-artist/' + image() : 'http://localhost:3000/api/get-image-artist/default.png'"
+            (error)="$any($event.target).src = 'http://localhost:3000/api/get-image-artist/default.png'"
             [alt]="name()"
             class="w-32 h-32 rounded-full object-cover mx-auto mb-4"
         >

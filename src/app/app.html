@@ -16,79 +16,100 @@
     <!-- MENÚ LATERAL Hamburguesa-->
     @if (menuOpen()) {
 
-      <aside
-          class="md:hidden fixed top-0 left-0 rounded-lg m-2 z-40 h-full w-55
-                bg-linear-to-r from-gray-900 to-gray-700
-                text-white p-6">
+      <aside class="fixed top-0 left-2 right-2 z-40 
+                    md:hidden rounded-2xl
+                    bg-white/80 backdrop-blur-2xl
+                    border border-white/60
+                    shadow-xl shadow-slate-900/5
+                    text-slate-800 p-4
+                    max-h-[90vh] overflow-y-auto
+                    animate-[slideDown_0.3s_ease-out]">
 
-          <h1 class="text-2xl mt-4 font-bold text-orange-500 italic text-center tracking-wider mb-10">
-              {{ title() }}
-              <i class="fa-solid fa-headphones"></i>
-          </h1>
+          <nav class="flex flex-col gap-0.5 mt-5">
 
-          <nav class="flex flex-col items-center gap-6 text-lg">
+            <a
+              routerLink="/home"
+              routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+              (click)="menuOpen.set(false)"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                    text-slate-700 hover:bg-white/50 hover:text-orange-600
+                    transition-all duration-300"
+            >
+              <i class="fa-solid fa-house w-5"></i>
+              Inicio
+            </a>
 
-              <a
-                  routerLink="/home"
-                  routerLinkActive="border-b-2 border-orange-500"
-                  class="gap-3 text-lg pb-1 px-2 w-fit hover:text-orange-500 transition-colors duration-700"
-                  (click)="menuOpen.set(false)">
-                  <i class="fa-solid fa-house"></i>
-                  Inicio
-              </a>
+            <a
+              routerLink="/artists/1"
+              routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+              (click)="menuOpen.set(false)"
+              class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                    text-slate-700 hover:bg-white/50 hover:text-orange-600
+                    transition-all duration-300"
+            >
+              <i class="fa-solid fa-star w-5"></i>
+              Artistas
+            </a>
 
-              <a
-                  routerLink="/artists/1"
-                  routerLinkActive="border-b-2 border-orange-500"
-                  class="gap-3 text-lg pb-1 px-2 w-fit hover:text-orange-500 transition-colors duration-700"
-                  (click)="menuOpen.set(false)">
-                  <i class="fa-solid fa-star"></i>
-                  Artistas
-              </a>
+            <a
+              routerLink="/song/list"
+              routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+              (click)="menuOpen.set(false)"
+              class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                    text-slate-700 hover:bg-white/50 hover:text-orange-600
+                    transition-all duration-300"
+            >
+              <i class="fa-solid fa-music w-5"></i>
+              Canciones
+            </a>
 
-              <a
-                  routerLink="/song/list"
-                  routerLinkActive="border-b-2 border-orange-500"
-                  class="gap-3 text-lg pb-1 px-2 w-fit hover:text-orange-500 transition-colors duration-700"
-                  (click)="menuOpen.set(false)">
-                  <i class="fa-solid fa-music"></i>
-                  Canciones
-              </a>
+            <a
+              routerLink="/album/list"
+              routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+              (click)="menuOpen.set(false)"
+              class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                    text-slate-700 hover:bg-white/50 hover:text-orange-600
+                    transition-all duration-300"
+            >
+              <i class="fa-solid fa-compact-disc w-5"></i>
+              Álbumes
+            </a>
 
-              <a
-                  routerLink="/album/list"
-                  routerLinkActive="border-b-2 border-orange-500"
-                  class="gap-3 text-lg pb-1 px-2 w-fit mb-4 hover:text-orange-500 transition-colors duration-700"
-                  (click)="menuOpen.set(false)">
-                  <i class="fa-solid fa-compact-disc"></i>
-                  Álbumes
-              </a>
-
-              
           </nav>
 
-          <div class="mt-auto space-y-2 flex flex-col items-center border-t border-gray-700 pt-6">
+          <div class=" space-y-2 flex flex-row items-center border-t border-slate-300/50 pt-4">
 
-            <div class="mb-6">
+            <div class="mb-2 mr-5">
                 <img
                 [src]="authService.identity()?.image ? 'http://localhost:3000/api/get-image-user/' + authService.identity()?.image
                       : 'http://localhost:3000/api/get-image-user/default.png'"
                 alt="Imagen de perfil"
-                class="w-25 h-25 rounded-full object-cover mx-auto"
+                class="w-10 h-10 rounded-full object-cover mx-auto"
                 >
             </div>
             
-            <p class="text-md tracking-wide">Bienvenido, {{ authService.identity()?.name }}</p>
+            <div class="flex flex-col gap-2">
+              <div>
+                <p class="text-xs text-center italic tracking-widest mb-2">Bienvenido, {{ authService.identity()?.name }}</p>
 
-            <a routerLink="/user-edit" routerLinkActive="border-b-2 border-orange-500" class="gap-3 pb-1 px-2 w-fit transition-colors duration-300">
-              <i class="fa-solid fa-user"></i>
-              Mi perfil
-            </a>
+                <a routerLink="/user-edit" routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+                  class="flex items-center text-md px-4 py-1 rounded-xl
+                        text-slate-700 hover:bg-white/50 hover:text-orange-600
+                        transition-all duration-300"
+                >
+                  <i class="fa-solid fa-user"></i>
+                  Mi perfil
+                </a>
+              </div>
+              
+              
+              <button type="button" (click)="logout()" class="text-xs button-close-sesion" >
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Cerrar sesión
+              </button>
+            </div>
             
-            <button type="button" (click)="logout()" class="text-sm button-submit" >
-              <i class="fa-solid fa-right-from-bracket"></i>
-              Cerrar sesión
-            </button>
 
           </div>
 
@@ -98,38 +119,65 @@
 
     <!-- MENÚ LATERAL -->
     <aside class="hidden md:flex h-full shrink-0 w-54 flex-col
-                  bg-linear-to-r from-gray-900 to-gray-700
-                  text-center text-white p-6 rounded-lg">
+         bg-white/50 backdrop-blur-2xl
+         border border-white/60
+         shadow-xl shadow-slate-900/5
+         text-center text-slate-800 p-6 rounded-2xl">
 
       <h1 class="text-2xl font-bold text-orange-500 italic tracking-wider mb-10">
         {{ title() }}<i class="fa-solid fa-headphones"></i>
       </h1>
 
-      <nav class="space-y-6 flex flex-col items-center">
-        
-        <a routerLink="/home" routerLinkActive="border-b-2 border-orange-500" class="gap-3 text-xl pb-1 px-2 w-fit hover:text-orange-500 transition-colors duration-700">
-          <i class="fa-solid fa-house"></i>
+      <nav class="flex flex-col gap-1">
+
+        <a
+          routerLink="/home"
+          routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                text-slate-700 hover:bg-white/50 hover:text-orange-600
+                transition-all duration-300"
+        >
+          <i class="fa-solid fa-house w-5"></i>
           Inicio
         </a>
 
-        <a routerLink="/artists/1" routerLinkActive="border-b-2 border-orange-500" class="gap-3 text-xl pb-1 px-2 w-fit hover:text-orange-500 transition-colors duration-700">
-          <i class="fa-solid fa-star"></i>
+        <a
+          routerLink="/artists/1"
+          routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+          class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                text-slate-700 hover:bg-white/50 hover:text-orange-600
+                transition-all duration-300"
+        >
+          <i class="fa-solid fa-star w-5"></i>
           Artistas
         </a>
 
-        <a routerLink="/song/list" routerLinkActive="border-b-2 border-orange-500" class="gap-3 text-xl pb-1 px-2 w-fit hover:text-orange-500 transition-colors duration-700">
-          <i class="fa-solid fa-music"></i>
+        <a
+          routerLink="/song/list"
+          routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+          class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                text-slate-700 hover:bg-white/50 hover:text-orange-600
+                transition-all duration-300"
+        >
+          <i class="fa-solid fa-music w-5"></i>
           Canciones
         </a>
 
-        <a routerLink="/album/list" routerLinkActive="border-b-2 border-orange-500" class="gap-3 text-xl pb-1 px-2 w-fit hover:text-orange-500 transition-colors duration-700">
-          <i class="fa-solid fa-compact-disc"></i>
+        <a
+          routerLink="/album/list"
+          routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+          class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                text-slate-700 hover:bg-white/50 hover:text-orange-600
+                transition-all duration-300"
+        >
+          <i class="fa-solid fa-compact-disc w-5"></i>
           Álbumes
         </a>
 
       </nav>
 
-      <div class="mt-auto space-y-2 flex flex-col items-center border-t border-gray-700 pt-6">
+      <div class="mt-auto space-y-3 flex flex-col items-center border-t border-slate-300/50 pt-6">
 
         <div class="mb-6">
             <img
@@ -137,13 +185,17 @@
                   : 'http://localhost:3000/api/get-image-user/default.png'"
             (error)="$any($event.target).src = 'http://localhost:3000/api/get-image-user/default.png'"
             alt="Imagen de perfil"
-            class="w-25 h-25 rounded-full object-cover mx-auto"
+            class="w-17 h-17 rounded-full object-cover mx-auto"
             >
         </div>
         
-        <p class="text-lg tracking-wide">Bienvenido, {{ authService.identity()?.name }}</p>
+        <p class="text-lg tracking-widest italic">Bienvenido, {{ authService.identity()?.name }}</p>
 
-        <a routerLink="/user-edit" routerLinkActive="border-b-2 border-orange-500" class="gap-3 pb-1 px-2 w-fit transition-colors duration-300">
+        <a routerLink="/user-edit" routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+          class="flex items-center gap-3 text-md px-4 py-2 rounded-xl
+                text-slate-700 hover:bg-white/50 hover:text-orange-600
+                transition-all duration-300"
+        >
           <i class="fa-solid fa-user"></i>
           Mi perfil
         </a>
@@ -158,7 +210,9 @@
     </aside>
 
     <!-- CONTENIDO -->
-    <main class="flex-1 min-h-0 flex flex-col rounded-2xl bg-gray-200">
+    <main class="flex-1 min-h-0 flex flex-col rounded-2xl bg-white/50 overflow-hidden
+         border border-white/60
+         shadow-xl">
 
       <div class="flex-1 min-h-0 overflow-y-auto p-8 pb-32">
         <router-outlet></router-outlet>
@@ -166,33 +220,203 @@
       
       @if (_playerService.currentSong()) {
 
-        <div class="fixed bottom-2 md:left-58 right-6 rounded-lg h-24 bg-linear-to-l from-gray-900 to-gray-700
-                   text-white flex items-center justify-center px-6 player-enter"
-             [class.left-59]="menuOpen()"
-             [class.left-2]="!menuOpen()">
+        <div class="fixed bottom-2 left-2 right-2 md:left-58 md:right-2
+            rounded-lg h-25 md:h-20 bg-white/60 backdrop-blur-2xl
+            border border-white/80 shadow-xl shadow-slate-900/10
+            flex items-center justify-center
+            px-6 text-gray-800 player-enter">
 
-          <div class="w-full max-w-4xl flex items-center gap-6">
+            <div class="w-full flex items-center gap-2">
 
-              <!-- Canción actual -->
-              <div class="hidden md:block w-48 shrink-0">
-                  <p class="font-semibold truncate">
-                      {{ _playerService.currentSong()?.name }}
+              <!-- Información de la canción -->
+              <div class="hidden md:flex items-center gap-3 w-38 shrink-0">
+
+                <!-- Portada provisional -->
+                <div
+                  class="flex items-center justify-center w-9 h-9 shrink-0 rounded-xl
+                        bg-linear-to-br from-orange-300 via-pink-300 to-violet-300
+                        shadow-md shadow-orange-500/10"
+                >
+                  <i class="fa-solid fa-headphones text-xl text-orange-500"></i>
+                </div>
+
+                <!-- Nombre y estado -->
+                <div class="min-w-0">
+
+                  <p class="font-semibold text-gray-800 truncate">
+                    {{ _playerService.currentSong()?.name }}
                   </p>
 
-                  <p class="text-sm text-gray-400">
+                  @if (isPlaying()) {
+                    <p class="text-xs text-gray-500">
                       Reproduciendo
-                  </p>
+                    </p>
+                  } @else {
+                    <p class="text-xs text-gray-500">
+                      Pausado
+                    </p>
+                  }
+
+                </div>
+
               </div>
 
-              <!-- Reproductor -->
+              <!-- Reproductor actual -->
               <audio
-                  [src]="'http://localhost:3000/api/get-audio-song/' + _playerService.currentSong()?.file"
-                  controls
-                  autoplay
-                  class="flex-1"
+                #audioPlayer
+                [src]="'http://localhost:3000/api/get-audio-song/' + _playerService.currentSong()?.file"
+                autoplay
+                (timeupdate)="updateProgress()"
+                (loadedmetadata)="updateProgress()"
+                (play)="isPlaying.set(true)"
+                (pause)="isPlaying.set(false)"
+                (ended)="handleSongEnded()"
+                class="hidden"
               ></audio>
 
-          </div>
+              <!-- Controles personalizados -->
+              <div class="flex-1 flex flex-col items-center justify-center gap-2">
+
+                  <!-- Nombre y estado -->
+                  <div class="flex items-center gap-2 md:hidden min-w-0">
+
+                    <p class="font-semibold text-gray-800 truncate">
+                      {{ _playerService.currentSong()?.name }}
+                    </p>
+
+                    @if (isPlaying()) {
+                      <p class="text-xs text-gray-500 shrink-0">
+                        Reproduciendo
+                      </p>
+                    } @else {
+                      <p class="text-xs text-gray-500 shrink-0">
+                        Pausado
+                      </p>
+                    }
+
+                  </div>
+
+                <!-- Controles de reproducción -->
+                <div class="flex items-center justify-center gap-4">
+
+                  
+
+                  <!-- Modo aleatorio -->
+                  <button
+                    type="button"
+                    (click)="_playerService.toggleShuffle()"
+                    [class.text-orange-500]="_playerService.shuffle()"
+                    [class.text-gray-400]="!_playerService.shuffle()"
+                    class="hover:text-orange-500 transition-colors cursor-pointer"
+                    [attr.aria-label]="_playerService.shuffle() ? 'Desactivar modo aleatorio' : 'Activar modo aleatorio'"
+                    [attr.aria-pressed]="_playerService.shuffle()"
+                  >
+                    <i class="fa-solid fa-shuffle text-lg"></i>
+                  </button>
+
+                  <!-- Canción anterior -->
+                  <button
+                    type="button"
+                    (click)="_playerService.previousSong()"
+                    class="text-gray-600 hover:text-orange-500 transition-colors cursor-pointer"
+                    aria-label="Canción anterior"
+                  >
+                    <i class="fa-solid fa-backward-step text-xl"></i>
+                  </button>
+
+                  <!-- Reproducir / pausar -->
+                  <button
+                    type="button"
+                    (click)="togglePlay()"
+                    class="w-8 h-8 rounded-full
+                          bg-linear-to-r from-orange-400 to-pink-400
+                          text-white shadow-md cursor-pointer
+                          flex items-center justify-center
+                          hover:scale-105 transition-transform"
+                    [attr.aria-label]="isPlaying() ? 'Pausar' : 'Reproducir'"
+                  >
+                    @if (isPlaying()) {
+                      <i class="fa-solid fa-pause"></i>
+                    } @else {
+                      <i class="fa-solid fa-play"></i>
+                    }
+                  </button>
+
+                  <!-- Canción siguiente -->
+                  <button
+                    type="button"
+                    (click)="handleSongEnded()"
+                    class="text-gray-600 hover:text-orange-500 transition-colors cursor-pointer"
+                    aria-label="Canción siguiente"
+                  >
+                    <i class="fa-solid fa-forward-step text-xl"></i>
+                  </button>
+
+                  <!-- Repetir canción actual -->
+                  <button
+                    type="button"
+                    (click)="_playerService.toggleRepeatSong()"
+                    [class.text-orange-500]="_playerService.repeatSong()"
+                    [class.text-gray-400]="!_playerService.repeatSong()"
+                    class="hover:text-orange-500 transition-colors cursor-pointer"
+                    [attr.aria-label]="_playerService.repeatSong() ? 'Desactivar repetición' : 'Repetir canción actual'"
+                    [attr.aria-pressed]="_playerService.repeatSong()"
+                  >
+                    <i class="fa-solid fa-repeat text-lg"></i>
+                  </button>
+                  
+                  <!-- Volumen -->
+                  <div class="flex items-center gap-3 lg:ml-12">
+
+                    <i class="fa-solid fa-volume-high text-gray-500"></i>
+
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      [value]="volume()"
+                      (input)="changeVolume($event)"
+                      [style.--volume-progress]="(volume() * 100) + '%'"
+                      class="music-slider w-10 min-[486px]:w-24 h-0.5 cursor-pointer"
+                      aria-label="Volumen"
+                    >
+                  </div>
+
+                </div>
+
+                <!-- Barra de progreso y tiempos -->
+                <div class="w-full flex items-center gap-3">
+
+                  <!-- Tiempo transcurrido -->
+                  <span class="text-xs text-gray-500 tabular-nums">
+                    {{ formatTime(currentTime()) }}
+                  </span>
+                  
+                  <!-- Barra interactiva -->
+                  <input
+                    type="range"
+                    min="0"
+                    step="any"
+                    [max]="duration() || 0"
+                    [value]="currentTime()"
+                    (input)="seek($event)"
+                    [style.--progress]="(duration() > 0 ? (currentTime() / duration()) * 100 : 0) + '%'"
+                    class="progress-slider flex-1 h-0.5 cursor-pointer"
+                    aria-label="Progreso de la canción"
+                  >
+
+                  <!-- Duración total -->
+                  <span class="text-xs text-gray-500 tabular-nums">
+                    {{ formatTime(duration()) }}
+                  </span>
+
+                </div>
+                
+
+              </div>
+
+           </div>
 
         </div>
 
@@ -212,7 +436,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
         
         <!-- LOGIN -->
-        <div class="container-form">
+        <div class="container-form self-start">
           <h2 class="text-2xl font-bold mb-4">
             Identifícate
           </h2>

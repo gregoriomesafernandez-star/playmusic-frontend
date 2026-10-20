@@ -6,7 +6,7 @@ The application allows users to manage artists, albums and songs, with JWT authe
 
 ## Backend Repository
 
-[Musicfy Backend](https://github.com/gregoriomesafernandez-star/musicfy-backend)
+[Musicfy Backend](https://github.com/gregoriomesafernandez-star/playMusic-backend)
 
 ## Features
 
@@ -41,7 +41,7 @@ The application allows users to manage artists, albums and songs, with JWT authe
 Clone the repository:
 
 ```bash
-git clone https://github.com/gregoriomesafernandez-star/musicfy-frontend.git
+git clone https://github.com/gregoriomesafernandez-star/playMusic-frontend.git
 cd musicfy-frontend
 ```
 

@@ -1,19 +1,20 @@
-<div class="relative h-80 overflow-hidden rounded-bl-lg rounded-br-lg -mx-8 -mt-8 mb-8">
+<div class="relative h-65 overflow-hidden -mx-8 -mt-8 mb-8">
 
     <img
         [src]="image()
             ? 'http://localhost:3000/api/get-image-album/' + image()
             : 'http://localhost:3000/api/get-image-album/default.png'"
+        (error)="$any($event.target).src = 'http://localhost:3000/api/get-image-album/default.png'"
         [alt]="title()"
-        class="absolute left-10 top-8 rounded-md w-60 h-60 object-cover"
+        class="absolute left-8 top-8 rounded-md w-45 h-45 object-cover"
     >
 
     <!-- Degradado para que el texto se lea -->
     <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
 
-    <div class="absolute top-1/2 left-75 -translate-y-1/2 text-white">
+    <div class="absolute top-1/2 left-65 -translate-y-1/2 text-white">
         
-        <h1 class="hidden sm:block text-5xl md:text-6xl font-bold mb-2">
+        <h1 class="hidden sm:block text-5xl md:text-5xl font-bold mb-2">
             {{ title()}}
         </h1>
 
@@ -40,9 +41,8 @@
 <!-- Mostrar canciones de album -->
 <div class="mt-12">
 
-    <h2 class="text-xl font-bold mb-4">
+    <h2 class="text-xl font-semibold mb-4">
         Canciones
-        <i class="fa-solid fa-music"></i>
     </h2>
     @if (songs().length === 0) {
 
@@ -73,7 +73,7 @@
                             <td class="py-3 px-4 text-center">
 
                                 <button
-                                    (click)="_playerService.playSong(song)"
+                                    (click)="_playerService.playSong(song, songs())"
                                     type="button"
                                     class="text-orange-500 hover:text-orange-700 text-xl cursor-pointer"
                                 >

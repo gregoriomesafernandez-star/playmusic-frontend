@@ -8,12 +8,17 @@
 }
 
 .button-submit{
-    @apply px-4 py-2 mt-5 bg-red-500 text-white rounded-xs cursor-pointer hover:bg-red-700 transition-all 
+    @apply px-4 py-2 mt-5 bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-700 transition-all 
+           duration-700 ease-in-out;
+}
+
+.button-close-sesion{
+    @apply px-4 py-2 bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-700 transition-all 
            duration-700 ease-in-out;
 }
 
 .button-back{
-    @apply px-4 py-2 mt-5 ml-5 bg-orange-400 text-white rounded-xs cursor-pointer hover:bg-orange-600 transition-all 
+    @apply px-4 py-2 mt-5 ml-5 bg-orange-500 text-white rounded-md cursor-pointer hover:bg-orange-400 transition-all 
            duration-700 ease-in-out;
 }
 
@@ -21,8 +26,25 @@
     @apply block mb-2 font-medium text-gray-600;
 }
 
-.container-form{
-    @apply p-6 border border-gray-400 bg-gray-200 rounded-lg shadow-md shadow-gray-400;
+.container-form {
+    @apply p-6 border border-white/70 bg-white/50 rounded-2xl shadow-lg shadow-slate-900/10;
+}
+
+@media (max-width: 768px) {
+  .container-form {
+    @apply w-full min-w-0 max-w-full box-border p-3;
+  }
+}
+
+@media (max-width: 490px) {
+  input[type="file"] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 12px;
+  }
 }
 
 .player-enter {
@@ -40,4 +62,144 @@
         opacity: 1;
     }
 }
+
+/* Animacion hamburguesa */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(180, 155, 205, 0.55);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 115, 0, 0.75);
+  background-clip: content-box;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(180, 155, 205, 0.65) transparent;
+}
+
+/* Barra de volumen */
+/* Estilo común de las barras */
+input[type="range"].music-slider {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+/* Línea en Chrome y Edge */
+input[type="range"].music-slider::-webkit-slider-runnable-track {
+  height: 2px;
+  background: transparent;
+}
+
+/* Línea en Firefox */
+input[type="range"].music-slider::-moz-range-track {
+  height: 2px;
+  background: transparent;
+}
+
+/* Bolita en Chrome y Edge */
+input[type="range"].music-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  margin-top: -4px;
+  border: none;
+  border-radius: 50%;
+  background: #f97316;
+  cursor: pointer;
+}
+
+/* Bolita en Firefox */
+input[type="range"].music-slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 50%;
+  background: #f97316;
+  cursor: pointer;
+}
+
+/* Relleno de la barra de volumen */
+input[type="range"].music-slider {
+  background: linear-gradient(
+    to right,
+    #f97316 0%,
+    #f97316 var(--volume-progress),
+    #d1d5db var(--volume-progress),
+    #d1d5db 100%
+  );
+  border-radius: 999px;
+}
+
+/* Barra de progreso */
+/* Línea en Chrome y Edge */
+input[type="range"].progress-slider::-webkit-slider-runnable-track {
+  height: 2px;
+  background: transparent;
+}
+
+/* Línea en Firefox */
+input[type="range"].progress-slider::-moz-range-track {
+  height: 2px;
+  background: transparent;
+}
+
+input[type="range"].progress-slider {
+  appearance: none;
+  -webkit-appearance: none;
+  background: linear-gradient(
+    to right,
+    #f97316 0%,
+    #f97316 var(--progress),
+    #d1d5db var(--progress),
+    #d1d5db 100%
+  );
+  border-radius: 999px;
+  outline: none;
+}
+
+/* Eliminar la bolita en Chrome y Edge */
+input[type="range"].progress-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+  border: none;
+}
+
+/* Eliminar la bolita en Firefox */
+input[type="range"].progress-slider::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}
+
 

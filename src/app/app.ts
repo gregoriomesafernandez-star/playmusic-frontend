@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
@@ -15,11 +15,19 @@ export class App implements OnInit {
 
 
   // Variables
-  title = signal('MUSICFY');
+  title = signal('PlayMUSIC');
 
   errorMessage = signal('');
   success_message = signal('');
   menuOpen = signal(false);
+
+  // REPRODUCTOR
+  @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
+
+  isPlaying = signal(false);
+  currentTime = signal(0);
+  duration = signal(0);
+  volume = signal(1);
 
   // LOGIN
   email = "";
@@ -50,6 +58,88 @@ export class App implements OnInit {
 
   }
 
+  // Reproducir o pausar la canción
+  togglePlay() {
+
+    const audio = this.audioPlayer.nativeElement;
+
+    if (audio.paused) {
+
+      audio.play().then(() => {
+        this.isPlaying.set(true);
+      }).catch(error => {
+        console.error('Error al reproducir el audio:', error);
+      });
+
+    } else {
+
+      audio.pause();
+      this.isPlaying.set(false);
+
+    }
+
+  }
+
+  // Actualizar el tiempo y la duración del audio
+  updateProgress() {
+    const audio = this.audioPlayer.nativeElement;
+
+    this.currentTime.set(audio.currentTime);
+
+    this.duration.set(
+      Number.isFinite(audio.duration) ? audio.duration : 0
+    );
+
+  }
+
+  // Cambiar la posición de reproducción
+  seek(event: Event) {
+    const audio = this.audioPlayer.nativeElement;
+    const input = event.target as HTMLInputElement;
+
+    audio.currentTime = Number(input.value);
+    this.currentTime.set(audio.currentTime);
+  }
+
+  // Convertir segundos a formato mm:ss
+  formatTime(seconds: number): string {
+    if (!Number.isFinite(seconds) || seconds < 0) {
+      return '0:00';
+    }
+
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
+  // Repetir la canción actual o pasar a la siguiente
+  handleSongEnded() {
+    const audio = this.audioPlayer.nativeElement;
+
+    if (this._playerService.repeatSong()) {
+      
+      audio.currentTime = 0;
+
+      audio.play().catch(error => {
+        console.error('Error al repetir la canción:', error);
+      });
+      
+    } else {
+      this._playerService.nextSong();
+    }
+  }
+
+  //Volumen
+  changeVolume(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const newVolume = Number(input.value);
+
+    this.volume.set(newVolume);
+    this.audioPlayer.nativeElement.volume = newVolume;
+  }
+  
+  //Login
   onLogin(loginForm: NgForm) {
 
     //Borramos mensaje de error si lo hay

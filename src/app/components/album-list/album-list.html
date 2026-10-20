@@ -1,13 +1,12 @@
-<div class="relative h-45 overflow-hidden bg-orange-300 rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-8">
+<div class="relative h-28 overflow-hidden bg-orange-300 rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-8">
 
     <!-- Degradado para que el texto se lea -->
     <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
 
-    <div class="absolute top-12 left-5 text-white">
+    <div class="absolute top-8 left-5 text-white">
         
-        <h1 class="text-4xl sm:text-6xl font-bold mb-2">
-            Albums
-            <i class="fa-solid fa-compact-disc"></i>
+        <h1 class="text-2xl sm:text-3xl font-bold mb-2">
+            Álbumes
         </h1>
         
     </div>
@@ -21,12 +20,12 @@
     </p>
 
 } @else {
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mt-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-6">
 
         @for (album of albums(); track album._id) {
 
             <div [routerLink]="['/album/detail', album._id]"
-                class="bg-gray-100 rounded-lg p-4
+                 class="flex flex-col h-full bg-white/60 p-4 rounded-xl border border-white/70
                         hover:shadow-lg cursor-pointer hover:shadow-orange-500/30
                         transition-all duration-300">
 
@@ -36,10 +35,10 @@
                         : 'http://localhost:3000/api/get-image-album/default.png'"
                     (error)="$any($event.target).src = 'http://localhost:3000/api/get-image-album/default.png'"
                     [alt]="album.title"
-                    class="w-full h-48 object-cover rounded-lg mb-4"
+                    class="w-full h-36 object-cover rounded-lg mb-4 "
                 >
 
-                <h3 class="text-xl font-bold">
+                <h3 class="text-xl font-semibold line-clamp-2">
                     {{ album.title }}
                 </h3>
 

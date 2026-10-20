@@ -89,7 +89,7 @@ export class AlbumDetail {
         },
 
         error: (error) => {
-          console.error('Error al obtener los albums:', error);
+          console.error('Error al obtener las canciones del album:', error);
         }
 
       });
