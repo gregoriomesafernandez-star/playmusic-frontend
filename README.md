@@ -6,7 +6,7 @@ The application allows users to manage artists, albums and songs, with JWT authe
 
 ## Backend Repository
 
-[playmusic Backend](https://github.com/gregoriomesafernandez-star/playMusic-backend)
+[playmusic Backend](https://github.com/gregoriomesafernandez-star/playmusic-backend)
 
 ## Features
 
@@ -41,8 +41,8 @@ The application allows users to manage artists, albums and songs, with JWT authe
 Clone the repository:
 
 ```bash
-git clone https://github.com/gregoriomesafernandez-star/playMusic-frontend.git
-cd musicfy-frontend
+git clone https://github.com/gregoriomesafernandez-star/playmusic-frontend.git
+cd playmusic-frontend
 ```
 
 Install dependencies:
@@ -53,7 +53,7 @@ npm install
 
 ## Backend API
 
-This application requires the Musicfy backend to be running.
+This application requires the playmusic backend to be running.
 
 Clone and configure the backend repository following its README instructions.
 
