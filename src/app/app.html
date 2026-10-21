@@ -124,7 +124,7 @@
          shadow-xl shadow-slate-900/5
          text-center text-slate-800 p-6 rounded-2xl">
 
-      <h1 class="text-2xl font-bold text-orange-500 italic tracking-wider mb-10">
+      <h1 class="text-2xl font-bold bg-linear-to-br from-orange-500 via-orange-500 to-orange-200 italic tracking-wider bg-clip-text text-transparent mb-10">
         {{ title() }}<i class="fa-solid fa-headphones"></i>
       </h1>
 
@@ -247,7 +247,7 @@
                     {{ _playerService.currentSong()?.name }}
                   </p>
 
-                  @if (isPlaying()) {
+                  @if (_playerService.isPlaying()) {
                     <p class="text-xs text-gray-500">
                       Reproduciendo
                     </p>
@@ -268,8 +268,8 @@
                 autoplay
                 (timeupdate)="updateProgress()"
                 (loadedmetadata)="updateProgress()"
-                (play)="isPlaying.set(true)"
-                (pause)="isPlaying.set(false)"
+                (play)="_playerService.isPlaying.set(true)"
+                (pause)="_playerService.isPlaying.set(false)"
                 (ended)="handleSongEnded()"
                 class="hidden"
               ></audio>
@@ -284,7 +284,7 @@
                       {{ _playerService.currentSong()?.name }}
                     </p>
 
-                    @if (isPlaying()) {
+                    @if (_playerService.isPlaying()) {
                       <p class="text-xs text-gray-500 shrink-0">
                         Reproduciendo
                       </p>
@@ -333,9 +333,9 @@
                           text-white shadow-md cursor-pointer
                           flex items-center justify-center
                           hover:scale-105 transition-transform"
-                    [attr.aria-label]="isPlaying() ? 'Pausar' : 'Reproducir'"
+                    [attr.aria-label]="_playerService.isPlaying() ? 'Pausar' : 'Reproducir'"
                   >
-                    @if (isPlaying()) {
+                    @if (_playerService.isPlaying()) {
                       <i class="fa-solid fa-pause"></i>
                     } @else {
                       <i class="fa-solid fa-play"></i>
@@ -433,7 +433,7 @@
               <i class="fa-solid fa-headphones"></i>
     </h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
         
         <!-- LOGIN -->
         <div class="container-form self-start">

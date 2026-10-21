@@ -1,4 +1,4 @@
-<!-- REGISTRO -->
+<!-- Editar usuario -->
 <div class="container-form w-120">
     <h2 class="text-2xl font-bold mb-4">
     {{ title() }}
@@ -42,7 +42,9 @@
 
         <div class="mb-6 mt-10">
             <img
-            [src]="'http://localhost:3000/api/get-image-user/' + authService.identity()?.image"
+            [src]="authService.identity()?.image ? 'http://localhost:3000/api/get-image-user/' + authService.identity()?.image
+                  : 'http://localhost:3000/api/get-image-user/default.png'"
+            (error)="$any($event.target).src = 'http://localhost:3000/api/get-image-user/default.png'"
             alt="Imagen de perfil"
             class="w-35 h-35 rounded-full object-cover mx-auto"
             >

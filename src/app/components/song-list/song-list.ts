@@ -1,17 +1,22 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { SongService } from '../../services/song.service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { RouterLink } from '@angular/router';
 import { PlayerService } from '../../services/player.service';
+import { ConfirmModal } from '../confirm-modal/confirm-modal';
 
 @Component({
   selector: 'app-song-list',
-  imports: [RouterLink],
+  imports: [RouterLink, ConfirmModal],
   templateUrl: './song-list.html',
   styleUrl: './song-list.css',
 })
 export class SongList implements OnInit{
+
+  @ViewChild(ConfirmModal) confirmModal!: ConfirmModal;
+
+  selectedSongId: string | null = null;
 
   //Variables
   songs = signal<any[]>([]);
@@ -57,27 +62,33 @@ export class SongList implements OnInit{
 
   }
 
-  //Eliminar cancion de la lista
-  onDeleteSong(id: string){
+  // Abrir el modal de confirmación
+  onDeleteSong(id: string) {
+    this.selectedSongId = id;
+    this.confirmModal.open();
+  }
+
+  // Eliminar la canción después de confirmar
+  confirmDeleteSong() {
+
+    if (!this.selectedSongId) {
+      return;
+    }
+
+    const id = this.selectedSongId;
 
     this._songService.deleteSong(id).subscribe({
 
-        next: (response) => {
+      next: (response) => {
+        console.log(response.message);
 
-            console.log(response.message);
+        this.selectedSongId = null;
+        this.getSongs();
+      },
 
-
-
-              // Volvemos a cargar canciones de album
-              this.getSongs();
-
-        },
-
-        error: (error) => {
-
-          console.error('Error al eliminar cancion:', error);
-
-        }
+      error: (error) => {
+        console.error('Error al eliminar canción:', error);
+      }
 
     });
 

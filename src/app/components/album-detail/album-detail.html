@@ -1,4 +1,4 @@
-<div class="relative h-65 overflow-hidden -mx-8 -mt-8 mb-8">
+<div class="gradient-header relative h-65 overflow-hidden -mx-8 -mt-8 mb-3">
 
     <img
         [src]="image()
@@ -36,14 +36,16 @@
         <i class="fa-solid fa-plus"></i>
         Añadir canción
     </a>
+
 }
 
-<!-- Mostrar canciones de album -->
-<div class="mt-12">
+<button type="button" class="button-back" (click)="back()">
+    ← Volver
+</button>
 
-    <h2 class="text-xl font-semibold mb-4">
-        Canciones
-    </h2>
+<!-- Mostrar canciones de album -->
+<div class="mt-8">
+
     @if (songs().length === 0) {
 
         <p class="mt-8 text-gray-500">
@@ -51,6 +53,10 @@
         </p>
 
     } @else {
+        <h2 class="text-xl font-semibold mb-4 tracking-wister">
+            Canciones
+        </h2>
+
         <table class="w-full text-left">
 
             <thead class="border-b border-gray-300">
@@ -76,8 +82,17 @@
                                     (click)="_playerService.playSong(song, songs())"
                                     type="button"
                                     class="text-orange-500 hover:text-orange-700 text-xl cursor-pointer"
+                                    [attr.aria-label]="'Reproducir ' + song.name"
                                 >
-                                    <i class="fa-solid fa-circle-play"></i>
+                                    @if (_playerService.currentSong()?._id === song._id && this._playerService.isPlaying()) {
+                                        <span class="equalizer">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+                                    } @else {
+                                        <i class="fa-solid fa-circle-play"></i>
+                                    }
                                 </button>
 
                             </td>
@@ -129,7 +144,12 @@
                     }
                 
             </tbody>
-
+            
+            <app-confirm-modal
+                title="¿Eliminar canción del álbum?"
+                message="¿Estás seguro de que quieres eliminar esta canción? Esta acción no se puede deshacer."
+                (confirmed)="confirmDeleteSong()"
+            />
         </table>
     }
 </div>

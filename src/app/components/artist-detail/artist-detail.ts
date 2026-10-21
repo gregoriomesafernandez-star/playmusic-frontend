@@ -1,17 +1,22 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArtistService } from '../../services/artist.service';
 import { AuthService } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { AlbumService } from '../../services/album.service';
+import { ConfirmModal } from '../confirm-modal/confirm-modal';
 
 @Component({
   selector: 'app-artist-detail',
-  imports: [RouterLink],
+  imports: [RouterLink, ConfirmModal],
   templateUrl: './artist-detail.html',
   styleUrl: './artist-detail.css',
 })
 export class ArtistDetail {
+
+  @ViewChild(ConfirmModal) confirmModal!: ConfirmModal;
+
+  selectedAlbumId: string | null = null;
 
   // Obtener artista
   name = signal('');
@@ -89,8 +94,20 @@ export class ArtistDetail {
 
   }
 
-  //Eliminar album de artista
-  onDeleteAlbum(id: string){
+  // Abrir el modal de confirmación
+  onDeleteAlbum(id: string) {
+    this.selectedAlbumId = id;
+    this.confirmModal.open();
+  }
+
+  // Eliminar álbum de artista después de confirmar
+  confirmDeleteAlbum() {
+
+    if (!this.selectedAlbumId) {
+      return;
+    }
+
+    const id = this.selectedAlbumId;
 
     this._albumService.deleteAlbum(id).subscribe({
 
@@ -116,6 +133,10 @@ export class ArtistDetail {
 
     });
 
+  }
+
+  back() {
+    window.history.back();
   }
 
 }

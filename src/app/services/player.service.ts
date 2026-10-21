@@ -6,6 +6,9 @@ import { Song } from '../models/song';
 })
 export class PlayerService {
 
+  // Reproduciendo
+  isPlaying = signal(false);
+
   // Canción que se está reproduciendo
   currentSong = signal<Song | null>(null);
 

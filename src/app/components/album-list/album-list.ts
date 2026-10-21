@@ -1,18 +1,23 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { AlbumService } from '../../services/album.service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { RouterLink } from '@angular/router';
+import { ConfirmModal } from '../confirm-modal/confirm-modal';
 
 @Component({
   selector: 'app-album-list',
-  imports: [RouterLink],
+  imports: [RouterLink, ConfirmModal],
   templateUrl: './album-list.html',
   styleUrl: './album-list.css',
 })
 export class AlbumList {
 
   //Variables
+  @ViewChild(ConfirmModal) confirmModal!: ConfirmModal;
+
+  selectedAlbumId: string | null = null;
+
   albums = signal<any[]>([]);
 
   //Constructor
@@ -55,8 +60,20 @@ export class AlbumList {
 
   }
 
-  //Eliminar album
-  onDeleteAlbum(id: string){
+  // Abrir el modal de confirmación
+  onDeleteAlbum(id: string) {
+    this.selectedAlbumId = id;
+    this.confirmModal.open();
+  }
+
+  // Eliminar la álbum después de confirmar
+  confirmDeleteSong() {
+
+    if (!this.selectedAlbumId) {
+      return;
+    }
+
+    const id = this.selectedAlbumId;
 
     this._albumService.deleteAlbum(id).subscribe({
 

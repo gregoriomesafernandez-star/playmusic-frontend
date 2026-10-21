@@ -1,4 +1,4 @@
-<div class="relative h-28 overflow-hidden bg-orange-300 rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-8">
+<div class="gradient-header relative h-28 overflow-hidden bg-orange-300 rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-8">
 
     <!-- Degradado para que el texto se lea -->
     <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
@@ -75,5 +75,13 @@
 
         }
 
+        <app-confirm-modal
+            title="¿Eliminar álbum?"
+            message="¿Estás seguro de que quieres eliminar este álbum? Esta acción no se puede deshacer."
+            (confirmed)="confirmDeleteSong()"
+        />
+        
     </div>
+            
+
 }

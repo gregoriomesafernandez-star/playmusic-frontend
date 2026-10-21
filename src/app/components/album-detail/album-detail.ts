@@ -1,18 +1,23 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../../services/album.service';
 import { SongService } from '../../services/song.service';
 import { AuthService } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { PlayerService } from '../../services/player.service';
+import { ConfirmModal } from '../confirm-modal/confirm-modal';
 
 @Component({
   selector: 'app-album-detail',
-  imports: [RouterLink],
+  imports: [RouterLink, ConfirmModal],
   templateUrl: './album-detail.html',
   styleUrl: './album-detail.css',
 })
 export class AlbumDetail {
+
+  @ViewChild(ConfirmModal) confirmModal!: ConfirmModal;
+
+  selectedSongId: string | null = null;
 
   // Variables
   success_message = signal('');
@@ -96,8 +101,20 @@ export class AlbumDetail {
 
   }
 
-  //Eliminar cancion de album
-  onDeleteSong(id: string){
+  // Abrir el modal de confirmación
+  onDeleteSong(id: string) {
+    this.selectedSongId = id;
+    this.confirmModal.open();
+  }
+
+  // Eliminar canción del álbum después de confirmar
+  confirmDeleteSong() {
+
+    if (!this.selectedSongId) {
+      return;
+    }
+
+    const id = this.selectedSongId;
 
     this._songService.deleteSong(id).subscribe({
 
@@ -123,6 +140,10 @@ export class AlbumDetail {
 
     });
 
+  }
+
+  back() {
+    window.history.back();
   }
 
 }

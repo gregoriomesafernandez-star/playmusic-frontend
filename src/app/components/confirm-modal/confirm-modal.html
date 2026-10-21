@@ -1,0 +1,71 @@
+@if (isOpen()) {
+    <!-- Fondo oscuro -->
+    <div
+        class="fixed inset-0 z-100 flex items-center justify-center
+               bg-black/50 backdrop-blur-sm p-4"
+        (click)="onCancel()"
+    >
+
+        <!-- Ventana de confirmación -->
+        <div
+            class="w-full max-w-md rounded-2xl border border-white/60
+                   bg-white/90 p-6 shadow-2xl shadow-black/20
+                   backdrop-blur-xl animate-[modalEnter_0.25s_ease-out]"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            (click)="$event.stopPropagation()"
+        >
+
+            <!-- Icono -->
+            <div class="mb-4 flex justify-center">
+                <div
+                    class="flex h-14 w-14 items-center justify-center
+                           rounded-full bg-red-100 text-red-500"
+                >
+                    <i class="fa-solid fa-trash-can text-2xl"></i>
+                </div>
+            </div>
+
+            <!-- Título -->
+            <h2
+                id="modal-title"
+                class="mb-2 text-center text-xl font-bold text-slate-800"
+            >
+                {{ title() }}
+            </h2>
+
+            <!-- Mensaje -->
+            <p class="mb-6 text-center text-sm leading-relaxed text-slate-600">
+                {{ message() }}
+            </p>
+
+            <!-- Botones -->
+            <div class="flex justify-center gap-3">
+
+                <button
+                    type="button"
+                    (click)="onCancel()"
+                    class="rounded-lg border border-gray-300 bg-white
+                           px-5 py-2 text-sm font-semibold text-gray-700
+                           transition hover:bg-gray-100 cursor-pointer"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="button"
+                    (click)="onConfirm()"
+                    class="rounded-lg bg-red-500 px-5 py-2
+                           text-sm font-semibold text-white
+                           transition hover:bg-red-700 cursor-pointer"
+                >
+                    <i class="fa-solid fa-trash-can mr-2"></i>
+                    Eliminar
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+}

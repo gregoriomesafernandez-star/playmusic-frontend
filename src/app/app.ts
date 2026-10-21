@@ -24,7 +24,6 @@ export class App implements OnInit {
   // REPRODUCTOR
   @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
 
-  isPlaying = signal(false);
   currentTime = signal(0);
   duration = signal(0);
   volume = signal(1);
@@ -66,7 +65,7 @@ export class App implements OnInit {
     if (audio.paused) {
 
       audio.play().then(() => {
-        this.isPlaying.set(true);
+        this._playerService.isPlaying.set(true);
       }).catch(error => {
         console.error('Error al reproducir el audio:', error);
       });
@@ -74,7 +73,7 @@ export class App implements OnInit {
     } else {
 
       audio.pause();
-      this.isPlaying.set(false);
+      this._playerService.isPlaying.set(false);
 
     }
 

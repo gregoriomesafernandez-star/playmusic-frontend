@@ -1,4 +1,4 @@
-<div class="relative h-28 overflow-hidden bg-orange-300 rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-8">
+<div class="gradient-header relative h-28 overflow-hidden bg-orange-300 rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-8">
 
     <!-- Degradado para que el texto se lea -->
     <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
@@ -46,8 +46,17 @@
                                 (click)="_playerService.playSong(song, songs())"
                                 type="button"
                                 class="text-orange-500 hover:text-orange-700 text-xl cursor-pointer"
+                                [attr.aria-label]="'Reproducir ' + song.name"
                             >
-                                <i class="fa-solid fa-circle-play"></i>
+                                @if (_playerService.currentSong()?._id === song._id && this._playerService.isPlaying()) {
+                                    <span class="equalizer">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+                                } @else {
+                                    <i class="fa-solid fa-circle-play"></i>
+                                }
                             </button>
 
                         </td>
@@ -104,6 +113,11 @@
                 }
             
         </tbody>
-
+        
+        <app-confirm-modal
+            title="¿Eliminar canción?"
+            message="¿Estás seguro de que quieres eliminar esta canción? Esta acción no se puede deshacer."
+            (confirmed)="confirmDeleteSong()"
+        />
     </table>
 }

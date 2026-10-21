@@ -1,4 +1,4 @@
-<div class="relative h-60 overflow-hidden rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-8">
+<div class="gradient-header relative h-60 overflow-hidden rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-3">
 
     <img
         [src]="image()
@@ -12,7 +12,7 @@
     <!-- Degradado para que el texto se lea -->
     <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
 
-    <div class="absolute bottom-8 left-8 text-white">
+    <div class="absolute bottom-8 left-8 p-2 text-white">
         
         <h1 class="text-4xl md:text-5xl font-bold mb-2">
             {{ name() }}
@@ -34,14 +34,13 @@
 @if (authService.identity()?.role === 'ROLE_ADMIN') {
     <a [routerLink]="['/album/create', ArtistId()]" class="button-submit">
         <i class="fa-solid fa-plus"></i>
-        Añadir albúm
+        Añadir álbum 
     </a>
 }
 
-<p class="text-xl mb-2 mt-13 font-bold">
-    Discografía
-    <i class="fa-solid fa-compact-disc"></i>
-</p>
+<button type="button" class="button-back" (click)="back()">
+    ← Volver
+</button>
 
 @if (albums().length === 0) {
 
@@ -50,7 +49,14 @@
     </p>
 
 } @else {
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-6">
+
+    <p class="text-xl mb-2 mt-7 font-semibold">
+        Discografía
+    </p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
+
+        
 
         @for (album of albums(); track album._id) {
 
@@ -104,6 +110,12 @@
             </div>
 
         }
+  
+        <app-confirm-modal
+            title="¿Eliminar álbum de artista?"
+            message="¿Estás seguro de que quieres eliminar este álbum? Esta acción no se puede deshacer."
+            (confirmed)="confirmDeleteAlbum()"
+        />
 
     </div>
 }

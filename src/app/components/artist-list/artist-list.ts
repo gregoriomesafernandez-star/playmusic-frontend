@@ -1,19 +1,24 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, ViewChild } from '@angular/core';
 import { Artist } from '../../models/artist';
 import { ArtistService } from '../../services/artist.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ConfirmModal } from '../confirm-modal/confirm-modal';
 
 @Component({
   selector: 'app-artist-list',
-  imports: [RouterLink],
+  imports: [RouterLink, ConfirmModal],
   templateUrl: './artist-list.html',
   styleUrl: './artist-list.css',
 })
 export class ArtistList implements OnInit{
 
   // Variables
+  @ViewChild(ConfirmModal) confirmModal!: ConfirmModal;
+
+  selectedArtistId: string | null = null;
+
   title = signal('Artistas');
   artists = signal<Artist[]>([]);
   total = signal(0);
@@ -62,8 +67,20 @@ export class ArtistList implements OnInit{
       });
   }
   
-  //Eliminar artista
-  onDeleteArtist(id: string){
+  // Abrir el modal de confirmación
+  onDeleteArtist(id: string) {
+    this.selectedArtistId = id;
+    this.confirmModal.open();
+  }
+  
+  // Eliminar la artista después de confirmar
+  confirmDeleteArtist() {
+
+    if (!this.selectedArtistId) {
+      return;
+    }
+
+    const id = this.selectedArtistId;
 
     this._artistService.deleteArtist(id).subscribe({
 
