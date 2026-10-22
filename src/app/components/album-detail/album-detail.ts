@@ -108,7 +108,7 @@ export class AlbumDetail {
   }
 
   // Eliminar canción del álbum después de confirmar
-  confirmDeleteSong() {
+  confirmDeleteSong(): void {
 
     if (!this.selectedSongId) {
       return;
@@ -118,25 +118,31 @@ export class AlbumDetail {
 
     this._songService.deleteSong(id).subscribe({
 
-        next: (response) => {
+      next: (response) => {
 
-            console.log(response.message);
+        console.log(response.message);
 
-            this._route.params.subscribe(params => {
+        // Eliminar la canción de la playlist del reproductor
+        const stopPlayer = this._playerService.removeSong(id);
 
-              const albumId = params['id'];
-
-              // Volvemos a cargar canciones de album
-              this.getSongs(albumId);
-
-            });
-        },
-
-        error: (error) => {
-
-          console.error('Error al eliminar cancion:', error);
-
+        // Si era la canción actual, detener el audio
+        if (stopPlayer) {
+          window.dispatchEvent(
+            new CustomEvent('playmusic:stop-audio')
+          );
         }
+
+        // Limpiar la canción seleccionada
+        this.selectedSongId = null;
+
+        // Actualizar las canciones del álbum
+        this.getSongs(this.id());
+
+      },
+
+      error: (error) => {
+        console.error('Error al eliminar canción:', error);
+      }
 
     });
 

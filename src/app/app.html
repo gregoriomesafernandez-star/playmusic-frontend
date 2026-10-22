@@ -93,12 +93,14 @@
               <div>
                 <p class="text-xs text-center italic tracking-widest mb-2">Bienvenido, {{ authService.identity()?.name }}</p>
 
-                <a routerLink="/user-edit" routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
-                  class="flex items-center text-md px-4 py-1 rounded-xl
+                <a routerLink="/user-edit" 
+                   routerLinkActive="bg-white/70 text-orange-600 shadow-sm"
+                   (click)="menuOpen.set(false)"
+                   class="flex items-center text-md px-4 py-1 rounded-xl
                         text-slate-700 hover:bg-white/50 hover:text-orange-600
                         transition-all duration-300"
                 >
-                  <i class="fa-solid fa-user"></i>
+                  <i class="fa-solid fa-user mr-2"></i>
                   Mi perfil
                 </a>
               </div>

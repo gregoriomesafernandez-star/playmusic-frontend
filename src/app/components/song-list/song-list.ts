@@ -80,10 +80,22 @@ export class SongList implements OnInit{
     this._songService.deleteSong(id).subscribe({
 
       next: (response) => {
+
         console.log(response.message);
+
+        // Actualizamos el reproductor
+        const stopPlayer = this._playerService.removeSong(id);
+
+        // Si eliminamos la canción actual, detenemos el audio
+        if (stopPlayer) {
+          window.dispatchEvent(
+            new CustomEvent('playmusic:stop-audio')
+          );
+        }
 
         this.selectedSongId = null;
         this.getSongs();
+
       },
 
       error: (error) => {

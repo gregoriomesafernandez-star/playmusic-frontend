@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
@@ -11,7 +11,7 @@ import { PlayerService } from './services/player.service';
   imports: [FormsModule, RouterLink, RouterOutlet, LucideAngularModule, RouterLinkActive],
   templateUrl: './app.html'
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
 
 
   // Variables
@@ -44,7 +44,28 @@ export class App implements OnInit {
     public _playerService: PlayerService
   ) {}
 
+  // Detener el audio cuando se elimina la canción actual
+  private stopAudioHandler = () => {
+
+    if (!this.audioPlayer) {
+      return;
+    }
+
+    const audio = this.audioPlayer.nativeElement;
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.removeAttribute('src');
+    audio.load();
+
+    this.currentTime.set(0);
+    this.duration.set(0);
+
+  };
+
   ngOnInit(){
+    
+    window.addEventListener('playmusic:stop-audio', this.stopAudioHandler);
 
     //Peristimos idenidad y token
     this.authService.identity.set(
@@ -54,6 +75,13 @@ export class App implements OnInit {
     this.authService.token.set(
       this._userService.getToken()
     );
+
+  }
+
+  // Eliminar el evento al destruir el componente
+  ngOnDestroy() {
+
+    window.removeEventListener('playmusic:stop-audio', this.stopAudioHandler);
 
   }
 

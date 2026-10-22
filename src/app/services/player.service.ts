@@ -114,4 +114,39 @@ export class PlayerService {
     this.repeatSong.update(value => !value);
   }
 
+  // Eliminar una canción de la lista de reproducción
+  removeSong(songId: string): boolean {
+
+    const songs = this.playlist();
+    const currentSong = this.currentSong();
+
+    // Comprobamos si la canción eliminada es la actual
+    const isCurrentSong = currentSong?._id === songId;
+
+    // Eliminamos la canción de la playlist
+    const updatedPlaylist = songs.filter(song => song._id !== songId);
+
+    this.playlist.set(updatedPlaylist);
+
+    // Si no es la canción actual, actualizamos el índice
+    if (!isCurrentSong) {
+
+      const currentIndex = updatedPlaylist.findIndex(
+        song => song._id === currentSong?._id
+      );
+
+      this.currentIndex.set(currentIndex);
+
+      return false;
+    }
+
+    // Si era la canción actual, limpiamos el reproductor
+    this.isPlaying.set(false);
+    this.currentSong.set(null);
+    this.currentIndex.set(-1);
+
+    // Indicamos que hay que detener el audio
+    return true;
+  }
+
 }
